@@ -1,0 +1,75 @@
+{% extends "nagoyameshi/base.html" %}
+
+{% block extra_head %}
+<script>
+console.log("ここにheadタグに追加するCSSやJSを書く");
+</script>
+{% endblock %}
+
+{% block main %}
+  <div class="table-responsive">
+   <h3>・・・店舗検索</h3>
+    <form action="" method="GET">
+
+      {# categoryのプルダウンを作成 #}
+      <select name="category">
+      <option value="">カテゴリ</option>
+
+      {# categoriesをレンダリング #}
+      {% for category in categories %}
+      <option value="{{ category.id }}" {% if request.GET.category == category.str_id %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+      </select>
+
+      <input type="text" name="search" value="{{ request.GET.search }}" placeholder="キーワード"> 
+      <input type="submit" value="検索" class="btn btn-info">
+      <button class="btn btn-outline-secondary">
+        <a  class="hover-style" style="text-decoration: none; color: rgb(77, 75, 75)" href="http://127.0.0.1:8000/?category_multi=1&category=&search=">リセット</a>
+      </button>
+
+    </form>
+
+    <div class="d-flex justify-content-center">
+    {# views.pyで取り出したデータを表示 #}
+    {% for restaurant in restaurants %}
+    <div class="p-3">
+    <div class="shadow p-3 mb-5 bg-white">
+      <tr>
+        <p class="card-header" style="width: 300px;">【{{ restaurant.category }}】{{ restaurant.name }}</p>
+      </tr>
+      <tr class="card-img">
+        <img src="{{ restaurant.img.url }}" style="width: auto;height: 150px;">
+      </tr>
+      <tr class="card-body">
+        <p class="card-text">営業時間：{{ restaurant.start }}～{{ restaurant.end }}</p>
+        <p class="card-text">平均予算：¥{{ restaurant.budget }}</p>
+        <p class="card-link"><a class="btn btn-info" href="{% url 'nagoyameshi:restaurant' restaurant.id %}">店舗詳細</a></p>
+      </tr>
+    </div>
+    </div>
+    {% endfor %}
+  </div>
+
+    {# ページの表示 #}
+    {{ restaurants.number }} / {{ restaurants.paginator.num_pages }} ページ<br>
+
+    {# 前へ #}
+    {% if restaurants.has_previous %}
+    <th><a href="{{ restaurants.first_page_link }}">&laquo; 先頭</a></th>
+    <th><a href="{{ restaurants.previous_page_link }}">&lt; 前へ</a></th>
+    {% else %}
+    <th>&laquo; 先頭</th>
+    <th>&lt; 前へ</a></th>
+    {% endif %}
+    <th>・</th>
+    {# 次へ #}
+    {% if restaurants.has_next %}
+    <th><a href="{{ restaurants.next_page_link }}">次へ &gt; </a></th>
+    <th><a href="{{ restaurants.end_page_link }}">最後 &raquo;</a></th>
+    {% else %}
+    <th>次へ &gt; </a></th>
+    <th>最後 &raquo;</th>
+    {% endif %}
+  </div> 
+
+{% endblock %}

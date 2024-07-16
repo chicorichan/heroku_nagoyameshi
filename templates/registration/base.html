@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+    <title>Nagoyameshi</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'nagoyameshi/css/nagoyameshi_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'nagoyameshi/css/accounts.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'common/css/style.css' %}">
+    <link rel="javascript" type="text/javascript" href="{% static 'nagoyameshi/js/scripts.js' %}">
+    {# favicon.ico表示 #}
+    <link href="{% static 'common/img/favicon.ico' %}" rel="icon">
+    <style>
+      .message_info { font-size: small; }
+      .message_success { font-size: small; }
+    </style>
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body style="margin-top: 0;margin-left: 50px;">
+    <div class="tooltip-container" id="tooltip" data-bs-toggle="tooltip" data-bs-html="true" title="「なごやめし」は、愛知県名古屋市を中心に発展した独特の料理スタイルで、地元の食材や調理法を活かた他の地域では味わえないユニークな味わいが特徴です。どの料理も名古屋の豊かな食文化を感じさせる一品なので、名古屋を訪れる際にはぜひ試してみてください。">  
+    <h1><a style="text-decoration: none; color: inherit" class="menu_link" href="http://127.0.0.1:8000/accounts/login/">Nagoyameshi</a></h1>
+    </div>
+      <main class="container">
+    
+        {% block main %}
+        {% endblock %}     
+        </main>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+        <script>
+          $(function () {
+            var tooltipTrigger = new bootstrap.Tooltip(document.getElementById('tooltip'));
+            $('#tooltip').on('click', function () {
+              if ($(this).attr('aria-describedby')) {
+                tooltipTrigger.hide();
+              } else {
+                tooltipTrigger.show();
+              }
+            });
+          });
+        </script>
+    </body>
+</html>
