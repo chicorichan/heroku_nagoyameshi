@@ -1,3 +1,4 @@
+
 """
 Django settings for myproject project.
 
@@ -15,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -23,7 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6=-z^47-j(htc()ir7x%_*6%@d&a8o4r%!_yifkkzd(q-hp=d^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# 開発中は DEBUG=True とする
+# デプロイをする時、DEBUG=False
 DEBUG = False
+
+# DEBUG = True の場合。ページにエラーメッセージが表示される。
+# DEBUG = False の場合。エラーメッセージは表示されない(エラーメッセージが部外者に確認できると、セキュリティ上問題あり。)
+
 
 ALLOWED_HOSTS = []
 
@@ -32,8 +38,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "nagoyameshi",
-    "accounts.apps.AccountsConfig",
-    #"upload",
+    "accounts",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,16 +49,18 @@ INSTALLED_APPS = [
 ]
 
 #↓↓↓↓↓追記↓↓↓↓↓
-
 #DEBUGがTrueのとき、メールの内容は全て端末に表示させる
 if DEBUG:
     EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
 else:
+    EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
+    """
     # Sendgridというメール送信サービスを使う。
     EMAIL_BACKEND       = "sendgrid_backend.SendgridBackend"
     DEFAULT_FROM_EMAIL  = "example@example.com" # Sendgrid送信用のメールアドレス。
     SENDGRID_API_KEY    = "ここにsendgridのAPIkeyを記述する" # 環境変数でも可
     SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+    """
 
 # ログイン・ログアウトのリダイレクト先。
 LOGIN_REDIRECT_URL  = "/"
@@ -158,11 +166,12 @@ MEDIA_URL = '/media/'   #←極端に言うと何でもよい
 # MEDIA_ROOTは保存先の場所
 MEDIA_ROOT = BASE_DIR / 'media'
 
-#Stripe 以下はデプロイ時に使用できない
-""""
+#Stripe
+"""
 from .local_settings import *
 """
-#↓追加    
+
+
 # APIキーは、環境変数を使って呼び出す。
 import os
 
@@ -210,13 +219,13 @@ if not DEBUG:
                 'PORT': '5432',
                 }
             }
+    
 
     #DBのアクセス設定
     import dj_database_url
 
     db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
     DATABASES['default'].update(db_from_env)
-    
 
     #cloudinaryの設定
     CLOUDINARY_STORAGE = { 
@@ -226,12 +235,5 @@ if not DEBUG:
             "SECURE"    : True,
             }
 
-    #これは画像だけ(上限20MB)
-    #DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-    #これは動画だけ(上限100MB)
-    #DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.VideoMediaCloudinaryStorage'
-
     #これで全てのファイルがアップロード可能(上限20MB。ビュー側でアップロードファイル制限するなら基本これでいい)
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
-

@@ -12,11 +12,11 @@
     <input type="submit" value="ログイン">
 </form>
 {% endcomment %}
-<img class="image" src='/media/nagoyameshi/restaurant/img/misokatu.jpg'/>
-<img class="image" src='/media/nagoyameshi/restaurant/img/ekimae.jpg'/>
-<img class="image" src='/media/nagoyameshi/restaurant/img/anbata.jpg'/>
-<img class="image" src='/media/nagoyameshi/restaurant/img/nagoyajyo.jpg'/>
-<img class="image" src='/media/nagoyameshi/restaurant/img/hitumabushi.jpg'/>
+<img class="image" src="{% static 'img/misokatu.jpg' %}">
+<img class="image" src="{% static 'img/ekimae.jpg' %}">
+<img class="image" src="{% static 'img/anbata.jpg' %}">
+<img class="image" src="{% static 'img/nagoyajo.jpg' %}">
+<img class="image" src="{% static 'img/hitumabushi.jpg' %}">
 
 <div style="text-align: center;">
 <form method="post" action="{% url 'login' %}">
