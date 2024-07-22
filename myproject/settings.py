@@ -39,7 +39,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "nagoyameshi",
     "accounts",
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -193,7 +192,7 @@ if not DEBUG:
 
     SECRET_KEY = os.environ["SECRETKEY"]
     
-    # 静的ファイル配信ミドルウェア、whitenoiseを使用。※ 順番不一致だと動かないため下記をそのままコピーする。
+    # 静的ファイル配信ミドルウェア、whitenoiseを使用。※ 順番不一致だと動かない
     MIDDLEWARE = [ 
         'django.middleware.security.SecurityMiddleware',
         'whitenoise.middleware.WhiteNoiseMiddleware',
