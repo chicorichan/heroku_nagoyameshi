@@ -67,3 +67,21 @@ from django.contrib.auth.decorators import login_required
 def profile_view(request):
     user = request.user.objects.all
     return render(request, 'mypage.html', {'user': user})
+
+from django.views import View
+from django.core.mail import send_mail
+
+class IndexView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        subject = "ここに件名を入れる"
+        message = "ここに本文を入れる"
+
+        from_email      = "huga@gmail.com"
+        recipient_list  = [ "hoge@gmail.com" ]
+        send_mail(subject, message, from_email, recipient_list)
+
+        return render(request,"bbs/index.html")
+
+index   = IndexView.as_view()
