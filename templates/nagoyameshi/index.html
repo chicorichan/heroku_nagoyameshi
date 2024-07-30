@@ -24,9 +24,9 @@ console.log("ここにheadタグに追加するCSSやJSを書く");
       <input type="text" name="search" value="{{ request.GET.search }}" placeholder="キーワード"> 
       <input type="submit" value="検索" class="btn btn-info">
       <button class="btn btn-outline-secondary">
-        <a  class="hover-style" style="text-decoration: none; color: rgb(77, 75, 75)" href="https://nagoyameshi-django-test-dc7dbab3e71c.herokuapp.com/">リセット</a>
+        <a  class="hover-style" style="text-decoration: none; color: rgb(77, 75, 75)" href="{% url 'nagoyameshi:index' %}">リセット</a>
       </button>
-
+      
     </form>
 
     <div class="d-flex justify-content-center">

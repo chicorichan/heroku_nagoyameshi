@@ -48,18 +48,27 @@ INSTALLED_APPS = [
 ]
 
 #↓↓↓↓↓追記↓↓↓↓↓
+#Stripe 以下はデプロイ時に使用できない
+"""
+from .local_settings import *
+"""
+#Stripe 以下はデプロイ時に使用できない
+
 #DEBUGがTrueのとき、メールの内容は全て端末に表示させる
 if DEBUG:
     EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
 else:
+    """
     EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
     """
-    # Sendgridというメール送信サービスを使う。
-    EMAIL_BACKEND       = "sendgrid_backend.SendgridBackend"
-    DEFAULT_FROM_EMAIL  = "example@example.com" # Sendgrid送信用のメールアドレス。
-    SENDGRID_API_KEY    = "ここにsendgridのAPIkeyを記述する" # 環境変数でも可
-    SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-    """
+    # Gmailメール送信サービスを使う。
+    EMAIL_BACKEND       = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST          = 'smtp.gmail.com'
+    EMAIL_HOST_USER     = os.environ["EMAIL_HOST_USER"]
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+    EMAIL_PORT          = "587"  # メールサーバーで指定されているポート
+    EMAIL_USE_TSL       = True  # メールサーバーで確認
+    
 
 # ログイン・ログアウトのリダイレクト先。
 LOGIN_REDIRECT_URL  = "/"

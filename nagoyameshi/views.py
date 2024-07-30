@@ -116,35 +116,7 @@ class IndexView(View):
             restaurants.end_page_link           = "?" + copied.urlencode()
 
         context["restaurants"]  = restaurants
-
-        """
-        # name="comment" を取得する場合
-        if "comment" in request.GET:
-            print( request.GET["comment"] ) 
-            # ↑このやり方だと、同じname属性が複数ある場合、最後の一つしか取れない。
-
-            # 複数ある場合、全部をリスト型にして取得するには？
-            print( request.GET.getlist("comment") )
         
-
-        if "category_multi" in request.GET:
-            print( request.GET.getlist("category_multi") )
-            # 検索処理をする。
-            
-            for category in request.GET.getlist("category_multi"):
-                # バリデーション
-                query |=Q(category=category)
-        
-        form = RestaurantCategorySearchForm(request.GET)
-
-        if form.is_valid():
-            #指定されたcategoryを取り出す。
-            cleaned = form.clean()
-
-            #category未指定字は条件は追加しない
-            if cleaned["category"]:
-                query &=Q(category=cleaned["category"])
-        """
         return render(request,"nagoyameshi/index.html",context)
 
 index   = IndexView.as_view()
@@ -425,14 +397,6 @@ mypage = MypageView.as_view()
 
 #Stripe
 stripe.api_key  = settings.STRIPE_API_KEY
-
-""""
-class IndexView(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        return render(request, "nagoyameshi/index.html")
-
-index   = IndexView.as_view()
-"""
 
 # 1: 決済の要求
 class CheckoutView(LoginRequiredMixin,View):

@@ -53,13 +53,12 @@ class CustomLogoutView(LogoutView):
 logout  = CustomLogoutView.as_view()
 
 
-password_change             = PasswordChangeView.as_view()
-password_change_done        = PasswordChangeDoneView.as_view()
-password_reset              = PasswordResetView.as_view()
-password_reset_done         = PasswordResetDoneView.as_view()
-password_reset_confirm      = PasswordResetConfirmView.as_view()
-password_reset_complete     = PasswordResetCompleteView.as_view()
-
+password_change         = PasswordChangeView.as_view(template_name='registration/password_change_form.html')
+password_change_done    = PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html')
+password_reset          = PasswordResetView.as_view(template_name='registration/password_reset_form.html')
+password_reset_done     = PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html')
+password_reset_confirm  = PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html')
+password_reset_complete = PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html')
 
 from django.contrib.auth.decorators import login_required
 
@@ -67,21 +66,3 @@ from django.contrib.auth.decorators import login_required
 def profile_view(request):
     user = request.user.objects.all
     return render(request, 'mypage.html', {'user': user})
-
-from django.views import View
-from django.core.mail import send_mail
-
-class IndexView(View):
-
-    def get(self, request, *args, **kwargs):
-
-        subject = "ここに件名を入れる"
-        message = "ここに本文を入れる"
-
-        from_email      = "huga@gmail.com"
-        recipient_list  = [ "hoge@gmail.com" ]
-        send_mail(subject, message, from_email, recipient_list)
-
-        return render(request,"bbs/index.html")
-
-index   = IndexView.as_view()
