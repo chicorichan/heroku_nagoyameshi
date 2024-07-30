@@ -54,6 +54,9 @@ from .local_settings import *
 """
 #Stripe 以下はデプロイ時に使用できない
 
+# APIキーは、環境変数を使って呼び出す。
+import os
+
 #DEBUGがTrueのとき、メールの内容は全て端末に表示させる
 if DEBUG:
     EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
@@ -178,10 +181,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 """
 from .local_settings import *
 """
-
-
-# APIキーは、環境変数を使って呼び出す。
-import os
 
 if "STRIPE_PUBLISHABLE_KEY" in os.environ and "STRIPE_API_KEY" in os.environ and "STRIPE_PRICE_ID" in os.environ:
     STRIPE_PUBLISHABLE_KEY  = os.environ["STRIPE_PUBLISHABLE_KEY"]
