@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6=-z^47-j(htc()ir7x%_*6%@d&a8o4r%!_yifkkzd(q-hp=d^
 # SECURITY WARNING: don't run with debug turned on in production!
 # 開発中は DEBUG=True とする
 # デプロイをする時、DEBUG=False
-DEBUG = False
+DEBUG = True
 
 # DEBUG = True の場合。ページにエラーメッセージが表示される。
 # DEBUG = False の場合。エラーメッセージは表示されない(エラーメッセージが部外者に確認できると、セキュリティ上問題あり。)
@@ -60,6 +60,16 @@ import os
 #DEBUGがTrueのとき、メールの内容は全て端末に表示させる
 if DEBUG:
     EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
+#DEBUG=FALSEに戻したら削除
+ # Gmailメール送信サービスを使う。
+    EMAIL_BACKEND       = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST          = "smtp.gmail.com"
+    EMAIL_HOST_USER     = os.environ["EMAIL_HOST_USER"]
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+    EMAIL_PORT          = 587  # メールサーバーで指定されているポート
+    EMAIL_USE_TSL       = True  # メールサーバーで確認
+#DEBUG=FALSEに戻したら削除
+
 else:
     """
     EMAIL_BACKEND   = "django.core.mail.backends.console.EmailBackend"
@@ -72,7 +82,6 @@ else:
     EMAIL_PORT          = 587  # メールサーバーで指定されているポート
     EMAIL_USE_TSL       = True  # メールサーバーで確認
     
-
 # ログイン・ログアウトのリダイレクト先。
 LOGIN_REDIRECT_URL  = "/"
 LOGOUT_REDIRECT_URL = "login" # urls.pyのnameを参照している。
@@ -189,8 +198,8 @@ if "STRIPE_PUBLISHABLE_KEY" in os.environ and "STRIPE_API_KEY" in os.environ and
 
 
 # Herokuデプロイ仕様の設定
-if not DEBUG:
-
+if DEBUG:
+#if not DEBUG:
     #INSTALLED_APPSにcloudinaryの追加
     INSTALLED_APPS.append('cloudinary')
     INSTALLED_APPS.append('cloudinary_storage')
