@@ -67,7 +67,7 @@ if DEBUG:
     EMAIL_HOST_USER     = os.environ["EMAIL_HOST_USER"]
     EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
     EMAIL_PORT          = 587  # メールサーバーで指定されているポート
-    EMAIL_USE_TSL       = True  # メールサーバーで確認
+    EMAIL_USE_TLS       = True  # メールサーバーで確認
 #DEBUG=FALSEに戻したら削除
 
 else:
