@@ -211,7 +211,7 @@ if not DEBUG:
         ]
 
     # 静的ファイル(static)の存在場所を指定する。
-    # STATIC_ROOT = BASE_DIR / "static"
+    STATIC_ROOT = BASE_DIR / "static"
 
     # DBの設定
     DATABASES = { 
